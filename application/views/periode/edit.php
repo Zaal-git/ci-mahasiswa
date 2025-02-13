@@ -5,6 +5,9 @@
         <div class="card-header">
             <h5 class="card-title">Ubah Data Periode</h5>
             <a href="<?= base_url('periode'); ?>" class="btn btn-danger">Kembali</a>
+            <?php if ($this->session->flashdata('message')) : ?>
+                <?= $this->session->flashdata('message'); ?>
+            <?php endif; ?>
         </div>
         <div class="card-body">
             <form method="post" action="<?= base_url('periode/edit/' . $periode['id_periode']); ?>">

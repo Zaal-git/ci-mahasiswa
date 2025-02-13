@@ -14,9 +14,9 @@ class Welcome extends CI_Controller {
 		$data['title'] = 'Yudisium';
 		$data['footer'] = 'Nabil Afzaal';
 		// Mengambil jumlah data dari tabel
-		$data['jumlah_yudisium'] = $this->dashboard_model->get_jumlah_yudisium();
-        $data['jumlah_registrasi'] = $this->dashboard_model->get_jumlah_registrasi();
-        $data['jumlah_mahasiswa'] = $this->dashboard_model->get_jumlah_mahasiswa();
+		$data['mahasiswa'] = $this->dashboard_model->get_jumlah_mahasiswa();
+		$data['pin'] = $this->dashboard_model->getJumlahPin();
+		$data['nonPin'] = $this->dashboard_model->getJumlahNonPin();
 
 		$this->load->view('templates/header', $data);		
 		$this->load->view('templates/sidebar');	

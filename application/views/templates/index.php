@@ -22,8 +22,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <span class="fw-semibold d-block mb-1">Yudisium</span>
-                                <h3 class="card-title mb-2"><?= $jumlah_yudisium; ?></h3>
+                                <span class="fw-semibold d-block mb-1">Mahasiswa</span>
+                                <h3 class="card-title mb-2"><?= $mahasiswa; ?></h3>
                                 <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> Total Data</small>
                             </div>
                         </div>
@@ -47,8 +47,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <span class="fw-semibold d-block mb-1">Registrasi</span>
-                                <h3 class="card-title mb-2"><?= $jumlah_registrasi; ?></h3>
+                                <span class="fw-semibold d-block mb-1">Mahasiswa Pin</span>
+                                <h3 class="card-title mb-2"><?= $pin; ?></h3>
                                 <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> Total Data</small>
                             </div>
                         </div>
@@ -72,8 +72,8 @@
                                         </div>
                                     </div>
                                 </div>
-                                <span class="fw-semibold d-block mb-1">Mahasiswa</span>
-                                <h3 class="card-title mb-2"><?= $jumlah_mahasiswa; ?></h3>
+                                <span class="fw-semibold d-block mb-1">Mahasiswa Non Pin</span>
+                                <h3 class="card-title mb-2"><?= $nonPin; ?></h3>
                                 <small class="text-success fw-semibold"><i class="bx bx-up-arrow-alt"></i> Total Data</small>
                             </div>
                         </div>
@@ -85,7 +85,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h5 class="card-title">Data Yudisium, Registrasi, dan Mahasiswa</h5>
+                                <h5 class="card-title">Data Mahasiswa, Mahasiswa Pin, dan Mahasiswa Non-Pin</h5>
                             </div>
                             <div class="card-body">
                                 <div id="dataChart"></div>

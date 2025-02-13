@@ -86,13 +86,13 @@
           series: [{
               name: 'Jumlah Data',
               data: [
-                  <?= $jumlah_yudisium; ?>,
-                  <?= $jumlah_registrasi; ?>,
-                  <?= $jumlah_mahasiswa; ?>
+                  <?= $mahasiswa; ?>,
+                  <?= $pin; ?>,
+                  <?= $nonPin; ?>
               ]
           }],
           xaxis: {
-              categories: ['Yudisium', 'Registrasi', 'Mahasiswa']
+              categories: ['Mahasiswa', 'Mahasiswa Pin', 'Mahasiswa Non Pin']
           },
           colors: ['#696cff', '#8592a3', '#71dd37'],
       };

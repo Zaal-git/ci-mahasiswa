@@ -22,11 +22,24 @@ class periode extends CI_Controller {
     
     public function add() {
         if ($this->input->post()) {
+            $status = $this->input->post('status');
+            
+            // Validasi: Pastikan tidak semua periode dinonaktifkan
+            if ($status == 0 && $this->periode_model->countActivePeriods() == 0) {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger">Tidak bisa menonaktifkan semua periode. Harus ada setidaknya satu periode yang aktif.</div>');
+                redirect('periode/add');
+            }
+            
+            if($status == 1){
+                $this->periode_model->deactivateOtherPeriods();
+            }
+            
             $this->periode_model->addPeriode([
                 'periode' => $this->input->post('periode'),
                 'keterangan' => $this->input->post('keterangan'),
-                'status' => $this->input->post('status')
+                'status' => $status
             ]);
+            
             $this->session->set_flashdata('message', '<div class="alert alert-success">Periode berhasil ditambahkan.</div>');
             redirect('periode');
         }
@@ -48,6 +61,12 @@ class periode extends CI_Controller {
         
         if ($this->input->post()) {
             $status = $this->input->post('status');
+    
+            // Validasi: Pastikan tidak semua periode dinonaktifkan
+            if ($status == 0 && $this->periode_model->countActivePeriods() == 1 && $this->periode_model->getPeriodeById($id)['status'] == 1) {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger">Tidak bisa menonaktifkan semua periode. Harus ada setidaknya satu periode yang aktif.</div>');
+                redirect('periode/edit/' . $id);
+            }
     
             // If the status is 1 (active), set all other periods to inactive
             if ($status == 1) {
@@ -74,7 +93,17 @@ class periode extends CI_Controller {
     
 
     public function delete($id) {
-        $this->Periode_model->deletePeriode($id);
+        // Ambil data periode yang akan dihapus
+        $periode = $this->periode_model->getPeriodeById($id);
+        
+        // Hapus periode
+        $this->periode_model->deletePeriode($id);
+        
+        // Jika periode yang dihapus adalah periode aktif, aktifkan periode terbaru
+        if ($periode['status'] == 1) {
+            $this->periode_model->activateLatestPeriode();
+        }
+        
         $this->session->set_flashdata('message', '<div class="alert alert-success">Periode berhasil dihapus.</div>');
         redirect('periode');
     }
