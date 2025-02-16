@@ -9,6 +9,22 @@ class yudisium extends CI_Controller {
         $this->load->model('registrasi_model');
         $this->load->model('fakultas_model');
         $this->load->model('jurusan_model');
+
+        // Cek apakah user sudah login
+        if (!$this->session->userdata('email')) {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger">Anda Belum Login!!</div>');
+            redirect('auth');
+        }
+
+    //    // Ambil data user dari session
+    //    $email = $this->session->userdata('email');
+    //    $user = $this->db->get_where('user', ['email' => $email])->row_array();
+
+    //    // Cek apakah akun aktif
+    //    if ($user['is_active'] == 0) {
+    //        $this->session->set_flashdata('message', '<div class="alert alert-warning">Akun Anda belum aktif. Silakan hubungi admin!</div>');
+    //        redirect('auth');
+    //    }
     }
 
     public function index() {
@@ -118,6 +134,7 @@ class yudisium extends CI_Controller {
         // Update PIN in database
         if ($this->yudisium_model->updatePin($nim, $pin)) {
             $this->session->set_flashdata('message', '<div class="alert alert-success">PIN berhasil ditambahkan!</div>');
+            $this->session->set_userdata('pin', $pin);
         } else {
             $this->session->set_flashdata('message', '<div class="alert alert-danger">Gagal menambahkan PIN!</div>');
         }

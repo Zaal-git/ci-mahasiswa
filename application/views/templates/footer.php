@@ -28,7 +28,6 @@
 
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src="<?= base_url('assets');?>/vendor/libs/jquery/jquery.js"></script>
     <script src="<?= base_url('assets');?>/vendor/libs/popper/popper.js"></script>
     <script src="<?= base_url('assets');?>/vendor/js/bootstrap.js"></script>
     <script src="<?= base_url('assets');?>/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
@@ -48,35 +47,22 @@
     <!-- Place this tag in your head or just before your close body tag. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
 
-    <!-- DataTables JS -->
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+    
+
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.5/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/2.2.2/js/buttons.print.min.js"></script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- Inisialisasi DataTables -->
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        $('#yudisiumTable').DataTable({
-            dom: 'Bfrtip',
-            buttons: [
-                'copy', 'csv', 'excel', 'pdf', 'print'
-            ],
-            responsive: true,
-            order: [[0, 'asc']], // Urutkan berdasarkan NIM secara ascending
-            language: {
-                search: "Cari:",
-                paginate: {
-                    next: "Selanjutnya",
-                    previous: "Sebelumnya"
-                }
-            }
-        });
-    });
+
+
     document.addEventListener("DOMContentLoaded", function () {
       const chartOptions = {
           chart: {
@@ -123,6 +109,43 @@
   document.addEventListener("DOMContentLoaded", function() {
     filterJurusan();
   });
+
+  $(document).ready(function() {
+    $('.btn-status').click(function() {
+        var button = $(this);
+        var id = button.data('id');
+        var status = button.data('status');
+        
+        console.log("ID:", id); // Debug: Periksa ID
+        console.log("Status:", status); // Debug: Periksa Status
+
+        // Kirim request AJAX
+        $.ajax({
+            url: '<?= base_url('role/update_status'); ?>', // Pastikan URL benar
+            type: 'POST',
+            data: {
+                id: id,
+                status: status
+            },
+            success: function(response) {
+                console.log("Response:", response); // Debug: Periksa response dari server
+                if (response == 'success') {
+                    // Update tampilan button
+                    if (status == 1) {
+                        button.removeClass('btn-success').addClass('btn-danger').text('Tidak Aktif').data('status', 0);
+                    } else {
+                        button.removeClass('btn-danger').addClass('btn-success').text('Aktif').data('status', 1);
+                    }
+                } else {
+                    alert('Gagal mengupdate status');
+                }
+            },
+            error: function(xhr, status, error) {
+                console.error("AJAX Error:", error); // Debug: Periksa error AJAX
+            }
+        });
+    });
+});
 </script>
   </body>
 </html>

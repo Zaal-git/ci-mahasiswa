@@ -43,5 +43,10 @@
         public function delete_data($nim) {
             return $this->db->delete('mahasiswa', ['NIM' => $nim]);
         }
+
+        public function deleteByName($nama) {
+            $this->db->where('name', $nama);
+            return $this->db->delete('user'); // Ganti 'user' dengan nama tabel yang menyimpan data pengguna
+        }
         
     }

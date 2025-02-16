@@ -1,3 +1,7 @@
+<?php
+    $role = $this->session->userdata('role');
+?>
+
 <div class="container-xxl flex-grow-1 container-p-y">
     <h4 class="fw-bold py-3 mb-4"><?= $title; ?></h4>
     
@@ -19,7 +23,9 @@
                         <th>Fakultas</th>
                         <th>Jurusan</th>
                         <th>PIN</th>
+                        <?php if(in_array($role, ['1', '3'])): ?>
                         <th>Action</th>
+                        <?php endif;?>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,6 +37,7 @@
 <td><?= !empty($row['jurusan']) ? $row['jurusan'] : 'Tidak Diketahui'; ?></td>
 
                             <td><?= $row['PIN']; ?></td>
+                            <?php if(in_array($role, ['1','3'])): ?>
                             <td>
                                 <div class="dropdown">
                                     <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
@@ -44,6 +51,7 @@
                                     </ul>
                                 </div>
                             </td>
+                            <?php endif; ?>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

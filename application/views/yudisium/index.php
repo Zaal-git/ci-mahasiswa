@@ -1,11 +1,16 @@
+<?php
+    $role = $this->session->userdata('role');
+?>
 <div class="container-xxl flex-grow-1 container-p-y">
-    <h4 class="fw-bold py-3 mb-4">Mahasiswa PIN & Mahasiswa Non-PIN</h4>
+    <h4 class="fw-bold py-3 mb-4">Mahasiswa PIN </h4>
 
     <!-- Mahasiswa Non-PIN -->
     <div class="card mb-4">
         <div class="card-header">
             <h5 class="card-title">Mahasiswa Non-PIN</h5>
+            <?php if(in_array($role, ['1', '3'])):?>
             <a href="<?= base_url('yudisium/addData');?>" class="btn btn-primary">+ Add Data</a>
+            <?php endif; ?>
             <hr>
             <?php if ($this->session->flashdata('message')) : ?>
                 <?= $this->session->flashdata('message'); ?>
@@ -19,7 +24,9 @@
                         <th>Nama</th>
                         <th>Kode Fakultas</th>
                         <th>Kode Jurusan</th>
+                        <?php if(in_array($role, ['1', '2'])): ?>
                         <th>Action</th>
+                        <?php endif; ?>
                     </tr>
                 </thead>
                 <tbody>
@@ -29,6 +36,7 @@
                             <td><?= $row['Nama']; ?></td>
                             <td><?= $row['kode_fakultas']; ?></td>
                             <td><?= $row['kodeJurusan']; ?></td>
+                            <?php if(in_array($role, ['1', '2'])): ?>
                             <td>
                                 <div class="dropdown">
                                     <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
@@ -41,6 +49,7 @@
                                     </ul>
                                 </div>
                             </td>
+                            <?php endif; ?>
                         </tr>
                     <?php endforeach; ?>
                 </tbody>

@@ -67,6 +67,20 @@
                     </div>
                 </div>
 
+                <!-- Email -->
+                <div class="row mb-3">
+                    <label class="col-sm-2 col-form-label" for="email">Email</label>
+                    <div class="col-sm-10">
+                        <div class="input-group input-group-merge">
+                            <span class="input-group-text">
+                                <i class="bx bx-envelope"></i>
+                            </span>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="Masukkan Email" required>
+                        </div>
+                    </div>
+                </div>
+
+
                 <!-- Alamat -->
                 <div class="row mb-3">
                     <label class="col-sm-2 col-form-label" for="alamat">Alamat</label>

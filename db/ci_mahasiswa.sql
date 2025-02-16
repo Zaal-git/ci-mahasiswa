@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 07, 2025 at 08:21 PM
+-- Generation Time: Feb 16, 2025 at 11:04 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -70,7 +70,6 @@ CREATE TABLE `jurusan` (
 INSERT INTO `jurusan` (`id`, `jurusan`, `kodeJurusan`, `kode_fakultas`) VALUES
 (5, 'Pendidikan Bahasa Indonesia', 'PBI', 'FKIP'),
 (6, 'Pendidikan Bahasa Inggris', 'PBE', 'FKIP'),
-(7, 'Bimbingan dan Konseling', 'BK', 'FKIP'),
 (8, 'Pendidikan Guru Sekolah Dasar', 'PGSD', 'FKIP'),
 (9, 'Pendidikan Anak Usia Dini', 'PAUD', 'FKIP'),
 (10, 'Pendidikan Jasmani, Kesehatan, dan Rekreasi', 'PJKR', 'FKIP'),
@@ -148,8 +147,7 @@ CREATE TABLE `mahasiswa` (
 --
 
 INSERT INTO `mahasiswa` (`Nama`, `Fakultas`, `Jurusan`, `Alamat`, `NomorHp`, `Ipk`, `jenisKelamin`, `id`, `NIM`, `statusRegist`, `PIN`, `periode`, `kode_fakultas`, `kode_jurusan`) VALUES
-('Nabil Afzaal', 'Fakultas Teknik', 'Teknik Informatika', 'Jl. Ps.Harimau', '1231231231', 4.00, 'Laki-Laki', 23, '1232312', 1, '123', 2, 'FATEK', 'TI'),
-('Moh Firgiawan', 'Fakultas Kehutanan', 'Kehutanan', 'Jl. Cendana', '2342342342', 2.54, 'Laki-Laki', 24, '111111', 1, '123', 2, 'FAHUT', 'KH');
+('Andi Mardiansa', 'Fakultas Teknik', 'Teknik Informatika', 'tondo', '1231231231', 3.99, 'Laki-Laki', 31, '2222', 1, '22', 2, 'FATEK', 'TI');
 
 -- --------------------------------------------------------
 
@@ -171,6 +169,32 @@ CREATE TABLE `periode` (
 INSERT INTO `periode` (`id_periode`, `periode`, `keterangan`, `status`) VALUES
 (1, 'Wisuda 128', 'Tes', 0),
 (2, 'Wisuda 127', 'tes', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user`
+--
+
+CREATE TABLE `user` (
+  `id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `email` varchar(168) NOT NULL,
+  `password` varchar(168) NOT NULL,
+  `role` int(1) NOT NULL,
+  `date_created` date NOT NULL,
+  `is_active` int(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`id`, `name`, `email`, `password`, `role`, `date_created`, `is_active`) VALUES
+(2, 'Rasya Aditya', 'rasya@gmail.com', '4009aad68df72e30420d0bfe2f68ac43', 2, '2025-02-14', 1),
+(3, 'Rangga', 'rangga@gmail.com', 'ad58b1c99aeb5cdf7663a02211e7f6fb', 3, '2025-02-14', 1),
+(12, 'Andi Mardiansa', 'anca@gmail.com', '934b535800b1cba8f96a5d72f72f1611', 4, '0000-00-00', 1),
+(13, 'Super Admin', 'admin@gmail.com', '83eebac535d14f791f6ee4dbefe689dc', 1, '2025-02-16', 1);
 
 --
 -- Indexes for dumped tables
@@ -201,6 +225,12 @@ ALTER TABLE `periode`
   ADD PRIMARY KEY (`id_periode`);
 
 --
+-- Indexes for table `user`
+--
+ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -220,13 +250,19 @@ ALTER TABLE `jurusan`
 -- AUTO_INCREMENT for table `mahasiswa`
 --
 ALTER TABLE `mahasiswa`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `periode`
 --
 ALTER TABLE `periode`
-  MODIFY `id_periode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_periode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `user`
+--
+ALTER TABLE `user`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

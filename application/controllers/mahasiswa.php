@@ -8,17 +8,27 @@ class mahasiswa extends CI_Controller {
         $this->load->model('mahasiswa_model');
         $this->load->model('fakultas_model');
         $this->load->model('jurusan_model');
+
+		if (!$this->session->userdata('email')) {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger">Anda Belum Login!!</div>');
+            redirect('auth');
+        }
     }
 
     public function index() {    
         $data['title'] = 'Mahasiswa';
         $data['footer'] = 'Nabil Afzaal';
+        $role = $this->session->userdata('role');
         $data['mahasiswa'] = $this->mahasiswa_model->getMahasiswaWithPeriode();
-        
+
         $this->load->view('templates/header', $data);        
         $this->load->view('templates/sidebar');    
         $this->load->view('templates/navbar');        
-        $this->load->view('mahasiswa/index', $data);    
+        if ($role == '4') {
+            $this->load->view('mahasiswa/mahasiswa_index', $data);
+        } else {
+            $this->load->view('mahasiswa/index', $data);
+        }
         $this->load->view('templates/footer', $data);
     }
 
@@ -103,14 +113,35 @@ class mahasiswa extends CI_Controller {
 			redirect('mahasiswa');
 		}
 	
-		if ($this->mahasiswa_model->delete_data($nim)) {
-			$this->session->set_flashdata('message', '<div class="alert alert-success">Data mahasiswa berhasil dihapus.</div>');
-		} else {
+		// Ambil data mahasiswa berdasarkan NIM
+		$mahasiswa = $this->mahasiswa_model->getByNIM($nim);
+	
+		if (!$mahasiswa) {
+			$this->session->set_flashdata('message', '<div class="alert alert-danger">Mahasiswa tidak ditemukan.</div>');
+			redirect('mahasiswa');
+		}
+	
+		// Mulai transaksi database
+		$this->db->trans_start();
+		
+		// Hapus dari tabel mahasiswa
+		$this->mahasiswa_model->delete_data($nim);
+	
+		// Hapus dari tabel user berdasarkan nama mahasiswa
+		$this->mahasiswa_model->deleteByName($mahasiswa['Nama']);
+	
+		// Selesaikan transaksi
+		$this->db->trans_complete();
+	
+		if ($this->db->trans_status() === FALSE) {
 			$this->session->set_flashdata('message', '<div class="alert alert-danger">Gagal menghapus data mahasiswa.</div>');
+		} else {
+			$this->session->set_flashdata('message', '<div class="alert alert-success">Data mahasiswa dan pengguna terkait berhasil dihapus.</div>');
 		}
 	
 		redirect('mahasiswa');
 	}
+	
 	
 	
 	

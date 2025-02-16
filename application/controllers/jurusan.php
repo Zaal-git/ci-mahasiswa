@@ -7,6 +7,16 @@ class jurusan extends CI_Controller {
         parent::__construct();
         $this->load->model('jurusan_model'); // Memuat model Jurusan
         $this->load->model('fakultas_model'); // Memuat model Jurusan
+    
+        if (!$this->session->userdata('email')) {
+            $this->session->set_flashdata('message', '<div class="alert alert-danger">Anda Belum Login!!</div>');
+            redirect('auth');
+        }
+
+        // Cek role user (misalnya hanya role 1 dan 2 yang bisa akses)
+        if (!in_array($this->session->userdata('role'), ['1', '2'])) {
+            redirect('auth/blocked'); // Redirect ke halaman blokir jika tidak sesuai role
+        }
     }
 
     // Method untuk menampilkan halaman index

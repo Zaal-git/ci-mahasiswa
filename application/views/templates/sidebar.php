@@ -1,3 +1,6 @@
+<?php
+$role = $this->session->userdata('role');
+?>
 <!-- Layout wrapper -->
 <div class="layout-wrapper layout-content-navbar">
   <div class="layout-container">
@@ -69,68 +72,74 @@
       </div>
 
       <div class="menu-inner-shadow"></div>
+     
 
       <!-- Sidebar -->
       <ul class="menu-inner py-1">
-        <!-- Dashboard -->
+        <!-- Dashboard (Super Admin) -->
+        <?php if ($role == '1'): ?>
         <li class="menu-item">
           <a href="<?= base_url('welcome'); ?>" class="menu-link">
             <i class="menu-icon bx bx-home"></i>
             <span>Dashboard</span>
           </a>
         </li>
+        
+        <li class="menu-item">
+          <a href="<?= base_url('role'); ?>" class="menu-link">
+            <i class="menu-icon bx bxs-user-check"></i>
+            <span>Role</span>
+          </a>
+        </li>
+        <?php endif; ?>
 
-        <!-- Yudisium -->
+        <!-- Yudisium, Registrasi, Mahasiswa (Admin & Dosen) -->
+        <?php if(!in_array($role, ['4'])) : ?>
         <li class="menu-item">
           <a href="<?= base_url('yudisium'); ?>" class="menu-link">
             <i class="menu-icon bx bx-book"></i>
             <span>Yudisium</span>
           </a>
         </li>
-
-        <!-- Registrasi -->
         <li class="menu-item">
           <a href="<?= base_url('registrasi'); ?>" class="menu-link">
             <i class="menu-icon bx bx-user-plus"></i>
             <span>Registrasi</span>
           </a>
         </li>
-
-        <!-- Mahasiswa -->
+        <?php endif; ?>
+    
+        <?php if(in_array($role, ['1', '2', '3', '4'])): ?>
         <li class="menu-item">
           <a href="<?= base_url('mahasiswa'); ?>" class="menu-link">
             <i class="menu-icon bx bxs-graduation"></i>
             <span>Mahasiswa</span>
           </a>
         </li>
+        <?php endif; ?>
 
-        <!-- Dropdown Data -->
-        <li class="menu-item has-sub">
-          <a href="javascript:void(0);" class="menu-link menu-toggle">
-            <i class="menu-icon bx bx-data"></i>
-            <span>Data</span>
+        <!-- Fakultas, Jurusan, Periode (Admin & Dosen) -->
+        <?php if (in_array($role, ['1','2'])): ?>
+        <li class="menu-item">
+          <a href="<?= base_url('fakultas'); ?>" class="menu-link">
+            <i class="menu-icon bx bx-building"></i>
+            <span>Fakultas</span>
           </a>
-          <ul class="menu-sub">
-            <li class="menu-item">
-              <a href="<?= base_url('fakultas'); ?>" class="menu-link">
-                <i class="bx bx-building"></i>
-                <span>Fakultas</span>
-              </a>
-            </li>
-            <li class="menu-item">
-              <a href="<?= base_url('jurusan'); ?>" class="menu-link">
-                <i class="bx bx-book"></i>
-                <span>Jurusan</span>
-              </a>
-            </li>
-            <li class="menu-item">
-              <a href="<?= base_url('periode'); ?>" class="menu-link">
-                <i class="bx bxs-calendar"></i>
-                <span>Periode</span>
-              </a>
-            </li>
-          </ul>
         </li>
+        <li class="menu-item">
+          <a href="<?= base_url('jurusan'); ?>" class="menu-link">
+            <i class="menu-icon bx bx-book"></i>
+            <span>Jurusan</span>
+          </a>
+        </li>
+        <li class="menu-item">
+          <a href="<?= base_url('periode'); ?>" class="menu-link">
+            <i class="menu-icon bx bxs-calendar"></i>
+            <span>Periode</span>
+          </a>
+        </li>
+        <?php endif; ?>
+
       </ul>
       <!-- End Sidebar -->
     </aside>
